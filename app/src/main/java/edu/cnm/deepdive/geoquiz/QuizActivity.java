@@ -21,10 +21,11 @@ public class QuizActivity extends AppCompatActivity {
     mTrueButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        Toast.makeText(QuizActivity.this,
+        Toast toast = Toast.makeText(QuizActivity.this,
             R.string.correct_toast,
-            Toast.LENGTH_SHORT) .show();
-        //Toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL) .show();
+            Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
       }
     });
 
@@ -32,10 +33,11 @@ public class QuizActivity extends AppCompatActivity {
     mFalseButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        Toast.makeText(QuizActivity.this,
+        Toast toast = Toast.makeText(QuizActivity.this,
             R.string.incorrect_toast,
-            Toast.LENGTH_SHORT) .show();
-        //Toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL) .show();
+            Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
       }
     });
   }
