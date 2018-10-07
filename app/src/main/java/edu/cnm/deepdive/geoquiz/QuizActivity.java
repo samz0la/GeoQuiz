@@ -61,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
     }
   private void updateQuestion() {
     int question = mQuestionBank[mCurrentIndex].getTextResId();
-    mQuestionTextView.setText(question);
+    mQuestionTextView.setText(Integer.toString(question));
   }
   private void checkAnswer(boolean userPressedTrue) {
     boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
