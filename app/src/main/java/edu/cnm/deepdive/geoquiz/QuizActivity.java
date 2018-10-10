@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.geoquiz;
 
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -61,7 +62,7 @@ public class QuizActivity extends AppCompatActivity {
     }
   private void updateQuestion() {
     int question = mQuestionBank[mCurrentIndex].getTextResId();
-    mQuestionTextView.setText(Integer.toString(question));
+    mQuestionTextView.setText(question);
   }
   private void checkAnswer(boolean userPressedTrue) {
     boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
@@ -73,7 +74,8 @@ public class QuizActivity extends AppCompatActivity {
     } else {
       messageResId = R.string.incorrect_toast;
     }
-    Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
-        .show();
+    Toast toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, Gravity.CENTER, 0 );
+        toast.show();
   }
 }

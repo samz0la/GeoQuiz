@@ -21,7 +21,7 @@ public class Question {
   }
 
   public Question (int mTextResId, boolean answerTrue) {
-    mTextResId = mTextResId;
+    this.mTextResId = mTextResId;
     mAnswerTrue = answerTrue;
   }
 
