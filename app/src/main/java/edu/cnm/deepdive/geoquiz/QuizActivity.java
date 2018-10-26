@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,10 +17,12 @@ public class QuizActivity extends AppCompatActivity {
   public static final String TAG = "QuizActivity";
   public static final String KEY_INDEX = "index";
 
-  private Button mTrueButton;
-  private Button mFalseButton;
-  private Button mNextButton;
-  private Button mPreviousButton;
+  private int scores = 0;
+  private int count = 0;
+  private ImageButton mTrueButton;
+  private ImageButton mFalseButton;
+  private ImageButton mNextButton;
+  private ImageButton mPreviousButton;
   private TextView mQuestionTextView;
 
   private Question[] mQuestionBank = new Question[] {
@@ -32,6 +35,7 @@ public class QuizActivity extends AppCompatActivity {
 
   };
   private int mCurrentIndex = 0;
+  private int[] mAnswered = {};
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,8 @@ public class QuizActivity extends AppCompatActivity {
     mTrueButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
+        mFalseButton.setEnabled(false);
+        mTrueButton.setEnabled(false);
         checkAnswer(true);
       }
     });
@@ -57,11 +63,13 @@ public class QuizActivity extends AppCompatActivity {
     mFalseButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
+        mFalseButton.setEnabled(false);
+        mTrueButton.setEnabled(false);
         checkAnswer(false);
       }
     });
 
-    mNextButton = (Button) findViewById(R.id.next_button);
+    mNextButton = (ImageButton) findViewById(R.id.next_button);
     mNextButton.setOnClickListener (new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -69,11 +77,26 @@ public class QuizActivity extends AppCompatActivity {
         updateQuestion();
       }
     });
-    mPreviousButton = (Button) findViewById(R.id.previous_button);
+    mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
     mPreviousButton.setOnClickListener (new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
+        if (mAnswered[mCurrentIndex] == 0) {
+          mTrueButton.setEnabled(true);
+          mFalseButton.setEnabled(true);
+          updateQuestion();
+        } else {
+          for (int j = 0; j< mQuestionBank.length; j++) {
+            count += mAnswered[j];
+          };
+          if (count == mQuestionBank.length) {
+            Toast.makeText(getApplicationContext(), "score is " + String
+                .valueOf(Math.round(scores/(float)mQuestionBank.length * 100)),Toast.LENGTH_SHORT).show();
+          } else {
+            count = 0;
+          }
+        }
         updateQuestion();
       }
     });
