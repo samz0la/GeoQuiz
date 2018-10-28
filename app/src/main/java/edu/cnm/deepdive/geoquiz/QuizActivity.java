@@ -74,6 +74,8 @@ public class QuizActivity extends AppCompatActivity {
       public void onClick(View v) {
         mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
         updateQuestion();
+        mTrueButton.setEnabled(true);
+        mFalseButton.setEnabled(true);
       }
     });
     mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
@@ -82,6 +84,8 @@ public class QuizActivity extends AppCompatActivity {
       public void onClick(View v) {
         mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
         updateQuestion();
+        mTrueButton.setEnabled(true);
+        mFalseButton.setEnabled(true);
       }
     });
     mCheatButton = (Button) findViewById(R.id.cheat_button);
