@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.geoquiz;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,12 +18,11 @@ public class QuizActivity extends AppCompatActivity {
   public static final String TAG = "QuizActivity";
   public static final String KEY_INDEX = "index";
 
-  private int scores = 0;
-  private int count = 0;
-  private ImageButton mTrueButton;
-  private ImageButton mFalseButton;
+  private Button mTrueButton;
+  private Button mFalseButton;
   private ImageButton mNextButton;
   private ImageButton mPreviousButton;
+  private Button mCheatButton;
   private TextView mQuestionTextView;
 
   private Question[] mQuestionBank = new Question[] {
@@ -35,7 +35,6 @@ public class QuizActivity extends AppCompatActivity {
 
   };
   private int mCurrentIndex = 0;
-  private int[] mAnswered = {};
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+
 
     mTrueButton = (Button) findViewById((R.id.true_button));
     mTrueButton.setOnClickListener(new OnClickListener() {
@@ -68,7 +68,6 @@ public class QuizActivity extends AppCompatActivity {
         checkAnswer(false);
       }
     });
-
     mNextButton = (ImageButton) findViewById(R.id.next_button);
     mNextButton.setOnClickListener (new View.OnClickListener() {
       @Override
@@ -82,24 +81,20 @@ public class QuizActivity extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
-        if (mAnswered[mCurrentIndex] == 0) {
-          mTrueButton.setEnabled(true);
-          mFalseButton.setEnabled(true);
-          updateQuestion();
-        } else {
-          for (int j = 0; j< mQuestionBank.length; j++) {
-            count += mAnswered[j];
-          };
-          if (count == mQuestionBank.length) {
-            Toast.makeText(getApplicationContext(), "score is " + String
-                .valueOf(Math.round(scores/(float)mQuestionBank.length * 100)),Toast.LENGTH_SHORT).show();
-          } else {
-            count = 0;
-          }
-        }
         updateQuestion();
       }
     });
+    mCheatButton = (Button) findViewById(R.id.cheat_button);
+    mCheatButton.setOnClickListener (new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // TODO Start CheatActivity
+        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+        Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
+        startActivity(intent);
+      }
+    });
+
     updateQuestion();
     }
 
